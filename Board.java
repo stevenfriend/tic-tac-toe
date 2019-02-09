@@ -2,22 +2,9 @@ class Board {
     private Type[][] board = new Type[3][3];
     private Type player;
 
-    public static void main(String[] args) {
-        Board game = new Board();
-        game.run();
-    }
-
-    void run() {
-        boolean testing = false;
-        assert(testing = true);
-        if(testing) test();
-        System.out.println(board[0][0]);
-    }
-
     void clear() {
-        int i, j;
-        for(i = 0; i <= 2; i++){
-            for(j = 0; j <= 2; j++){
+        for(int i = 0; i <= 2; i++){
+            for(int j = 0; j <= 2; j++){
                 board[j][i] = Type.blank;
             }
         }
@@ -29,8 +16,7 @@ class Board {
     }
 
     boolean won(Type p) {
-        int i;
-        for(i = 0; i <= 2; i++) {
+        for(int i = 0; i <= 2; i++) {
             if(board[0][i] == p) {
                 if(board[1][i] == p && board[2][i] == p) return true;
                 if(board[1][1] == p && board[2][2-i] == p) return true;
@@ -41,9 +27,8 @@ class Board {
     }
 
     boolean draw() {
-        int i, j;
-        for(i = 0; i <= 2; i++){
-            for(j = 0; j <= 2; j++){
+        for(int i = 0; i <= 2; i++){
+            for(int j = 0; j <= 2; j++){
                 if(board[j][i] == Type.blank) return false;
             }
         }
@@ -61,9 +46,25 @@ class Board {
         else player = Type.O;
     }
 
+    Type[][] get() {
+        return board;
+    }
+
     // ---------- Testing -----------
 
-    void test() {
+    public static void main(String[] args) {
+        Board testboard = new Board();
+        testboard.run();
+    }
+
+    private void run() {
+        boolean testing = false;
+        assert(testing = true);
+        if(testing) test();
+        System.out.println("All tests pass");
+    }
+
+    private void test() {
         testClear();
         testValid();
         testWon();
