@@ -33,13 +33,15 @@ class Board {
         return false;
     }
 
-    boolean win(Type p) {
+    boolean win() {
         for(int i = 0; i <= 2; i++) {
-            if(board[0][i] == p) {
-                if(board[1][i] == p && board[2][i] == p) return true;
-                if(board[1][1] == p && board[2][2-i] == p) return true;
+            if(board[0][i] != Type.blank) {
+                if(board[0][i] == board[1][i] && board[1][i] == board[2][i]) return true;
+                if(board[0][i] == board[1][1] && board[1][1] == board[2][2-i]) return true;
             }
-            if(board[i][0] == p && board[i][1] == p && board[i][2] == p) return true;
+            if(board[i][0] != Type.blank) {
+                if(board[i][1] == board[i][2] && board[i][0] == board[i][1]) return true;
+            }
         }
         return false;
     }
@@ -50,7 +52,7 @@ class Board {
                 if(board[j][i] == Type.blank) return false;
             }
         }
-        if(win(Type.O) || win(Type.X)) return false;
+        if(win()) return false;
         return true;
     }
 
@@ -117,14 +119,18 @@ class Board {
 
     private void testWin() {
         clear();
-        assert(win(Type.O) == false);
-        assert(win(Type.X) == false);
+        assert(win() == false);
+        board[0][0] = Type.X; board[0][1] = Type.X; board[0][2] = Type.X;
+        assert(win() == true);
+        clear(); assert(win() == false);
+        board[1][0] = Type.O; board[1][1] = Type.O; board[1][2] = Type.O;
+        assert(win() == true);
+        clear(); assert(win() == false);
+        board[2][0] = Type.X; board[1][1] = Type.X; board[0][2] = Type.X;
+        assert(win() == true);
+        clear(); assert(win() == false);
         board[0][0] = Type.O; board[1][1] = Type.O; board[2][2] = Type.O;
-        assert(win(Type.O) == true);
-        assert(win(Type.X) == false);
-        board[2][0] = Type.X; board[2][1] = Type.X; board[2][2] = Type.X;
-        assert(win(Type.O) == false);
-        assert(win(Type.X) == true);
+        assert(win() == true);
     }
 
     private void testDraw() {

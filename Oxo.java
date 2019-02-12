@@ -29,7 +29,7 @@ class Oxo {
     }
 
     private void check() {
-        if(board.win(board.player())){
+        if(board.win()){
             playing = false;
             display.printOut(board.get());
             display.win(board.player());
